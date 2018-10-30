@@ -6,58 +6,57 @@ type User struct {
 	// Признак служебных сотрудников-ботов:
 	// true — бот;
 	// false — человек.
-	IsRobot bool
+	IsRobot bool `json:"is_robot,omitempty"`
 	// Произвольный идентификатор, который вы можете задать при создании сотрудника.
-	ExternalId string
+	ExternalId string `json:"external_id,omitempty"`
 	// Должность сотрудника
-	Position string
-	// !
+	Position string `json:"position,omitempty"`
 	// Массив объектов с информацией об отделах, к которым относится сотрудник (включая вышестоящие отделы).
 	Departments []struct {
 		// Идентификатор отдела, к которому относится сотрудник.
-		ID uint
-	}
+		ID uint `json:"id,omitempty"`
+	} `json:"departments,omitempty"`
 	// Идентификатор организации, в которой состоит сотрудник.
-	OrgID uint
+	OrgID uint `json:"org_id,omitempty"`
 	// Пол сотрудника:
 	// male — мужской;
 	// female — женский
 	// null — пол не указан.
-	Gender string
+	Gender string `json:"gender,omitempty"`
 	// Дата и время создания сотрудника в формате
 	// YYYY-MM-DDThh:mm:ss.ssssssZ
-	Created string
+	Created string `json:"created,omitempty"`
 	// !
 	// Объект с информацией об имени сотрудника
 	Name struct {
 		// Имя сотрудника
-		First string
+		First string `json:"first,omitempty"`
 		// Фамилия сотрудника
-		Last string
+		Last string `json:"last,omitempty"`
 		// Отчество сотрудника (отчество != среднему имени)
-		Middle string
-	}
+		Middle string `json:"middle,omitempty"`
+	} `json:"name,omitempty"`
 	// Содержимое поля О сотруднике.
-	About string
+	About string `json:"about,omitempty"`
 	// Логин сотрудника.
-	Nickname string
+	Nickname string `json:"nickname,omitempty"`
 	// !
 	// Массив объектов с информацией о командах, в которых состоит сотрудник.
 	Groups []struct {
 		// Идентификатор команды, в которой состоит сотрудник.
-		ID uint
-	}
+		ID uint `json:"id,omitempty"`
+	} `json:"groups,omitempty"`
 	// Признак администратора организации:
 	// true — администратор;
 	// false — рядовой пользователь.
-	IsAdmin bool
+	IsAdmin bool `json:"is_admin,omitempty"`
 	// Дата рождения сотрудника в формате
 	// YYYY-MM-DD
-	Birthday string
+	Birthday string `json:"birthday,omitempty"`
 	// Идентификатор отдела, в котором состоит сотрудник.
-	DepartmentID uint
+	DepartmentID uint `json:"department_id,omitempty"`
 	// Основной адрес электронной почты сотрудника.
-	Email string
+	Email string `json:"email,omitempty"`
 	// Объект с информацией об отделе, в котором состоит сотрудник.
 	// По умолчанию содержит только поле id.
 	// Список полей можно расширить, передав в запросе параметр
@@ -65,57 +64,59 @@ type User struct {
 	// Подробнее о полях отделов читайте в разделе Просмотреть параметры отдела.
 	Department struct {
 		// Идентификатор отдела.
-		ID uint
+		ID uint `json:"id,omitempty"`
 		// Текстовое название отдела, например, «Отдел разработки».
-		Name string
+		Name string `json:"name,omitempty"`
 		// Описание отдела.
-		Description string
+		Description string `json:"description,omitempty"`
 		// Идентификатор сотрудника-руководителя отдела.
-		HeadID uint
+		HeadID uint `json:"head_id,omitempty"`
 		// Имя почтового ящика отдела. Имя может состоять только из символов латинского алфавита, цифр, знаков минус и нижнего подчеркивания.
 		// Например, адрес ящика с именем new-department будет new-department@<ваш-домен>.tld.
-		Label string
+		Label string `json:"label,omitempty"`
 		// Коллективный почтовый адрес отдела.
-		Email string
+		Email string `json:"email,omitempty"`
 		// Массив объектов с информацией о родительских отделах. Содержит информацию обо всех вышестоящих отделах
-		Parents []interface{}
-	}
+		Parents []interface{} `json:"parents,omitempty"`
+	} `json:"department,omitempty"`
 	// Массив объектов с информацией о контактах сотрудника.
-	Contacts []struct {
-		// Значение контакта.
-		Value string
-		// Тип контакта. Может принимать одно из значений:
-		// email;
-		// phone_extension;
-		// phone;
-		// site;
-		// icq;
-		// twitter;
-		// facebook;
-		// skype.
-		Type string
-		// Признак основного контакта:
-		// true — основной;
-		// false — альтернативный.
-		// У сотрудников может быть только один основной контакт каждого типа.
-		Main bool
-		// Если у сотрудника есть псевдоним, для него автоматически создается контакт типа email:
-		// true — контакт создан на основе псевдонима;
-		// false — контакт создан вручную.
-		Alias bool
-		// Признак автоматически созданного контакта:
-		// true — контакт создан автоматически;
-		// false — контакт создан вручную.
-		Synthetic bool
-	}
+	Contacts []Contact `json:"contacts,omitempty"`
 	// Перечень псевдонимов сотрудника.
-	Aliases []string
+	Aliases []string `json:"aliases,omitempty"`
 	// Идентификатор сотрудника.
-	ID uint
+	ID uint `json:"id,omitempty"`
 	// Признак уволенного сотрудника:
 	// true — уволенный;
 	// false — действующий.
-	IsDismissed bool
+	IsDismissed bool `json:"is_dismissed,omitempty"`
+}
+
+type Contact struct {
+	// Значение контакта.
+	Value string `json:"value,omitempty"`
+	// Тип контакта. Может принимать одно из значений:
+	// email;
+	// phone_extension;
+	// phone;
+	// site;
+	// icq;
+	// twitter;
+	// facebook;
+	// skype.
+	Type string `json:"type,omitempty"`
+	// Признак основного контакта:
+	// true — основной;
+	// false — альтернативный.
+	// У сотрудников может быть только один основной контакт каждого типа.
+	Main bool `json:"main,omitempty"`
+	// Если у сотрудника есть псевдоним, для него автоматически создается контакт типа email:
+	// true — контакт создан на основе псевдонима;
+	// false — контакт создан вручную.
+	Alias bool `json:"alias,omitempty"`
+	// Признак автоматически созданного контакта:
+	// true — контакт создан автоматически;
+	// false — контакт создан вручную.
+	Synthetic bool `json:"synthetic,omitempty"`
 }
 
 func (u User) isR() {}

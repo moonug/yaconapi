@@ -5,7 +5,7 @@ type Api struct {
 	Token  string
 }
 
-func NewApi(token string) (*Api, error) {
+func New(token string) (*Api, error) {
 	a := Api{}
 	return &a, nil
 }
